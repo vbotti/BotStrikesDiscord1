@@ -1,6 +1,7 @@
 import asyncio
-
+from random import randint
 import discord
+import math
 from discord import User
 
 TOKEN = 'NTA3OTI5NzY0NDE0MDk1MzY5.Dr43qw.Kj16fyIPJLdEWNeqg2OW6tX5JNs'
@@ -111,6 +112,28 @@ async def on_message(message):
         msg = ':angel: :angel: '+ jorge.mention + ' perdona al inocente de ' +pulpo.mention+ ", el solo quiere la PAZ :angel: :angel:".format(message)
         await client.send_message(message.channel, msg)
 
+    if message.content.startswith('?dado'):
+        msg = randint(1,6)
+        await client.send_message(message.channel, "El número es ------------------> " + str(msg))
+
+    if message.content.startswith('?borrar'):
+        men = (message.content).split(' ')
+        try:
+            async for mensaje in client.logs_from(message.channel, limit=int(men[1])):
+                await client.delete_message(mensaje)
+        except:
+            return
+        
+    if message.content.startswith('?limpiar'):
+        list = []
+        try:
+            async for mensaje in client.logs_from(message.channel, limit=100):
+                if mensaje.author == client.user or '?' in mensaje.content or '!' in mensaje.content:
+                    list.append(mensaje)
+            await client.delete_messages(list)
+
+        except:
+            return
 
 @client.event
 async def on_ready():
