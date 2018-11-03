@@ -1,3 +1,5 @@
+import asyncio
+
 import discord
 
 TOKEN = 'NTA3OTI5NzY0NDE0MDk1MzY5.Dr43qw.Kj16fyIPJLdEWNeqg2OW6tX5JNs'
@@ -59,10 +61,15 @@ async def on_message(message):
             num = listaStrikes[aux +1]
             num = int(num) + 1
             if str(num) == "3":
-                msg ='@' + usuario + " ha sido muteado hasta que un admin lo desmutee"
+
+
+                msg ='@' + usuario + " ha sido muteado 20 segundos"
                 listaStrikes[aux+1] = "0"
 
                 await client.server_voice_state(await getUsuarioObjeto(usuario), mute=True)
+                await asyncio.sleep(5)
+                await client.server_voice_state(await getUsuarioObjeto(usuario), mute=False)
+
             else:
                 listaStrikes[aux+1] = str(num)
                 lista = str(usuario).split("#")
