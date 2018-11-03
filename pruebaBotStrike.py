@@ -69,13 +69,11 @@ async def on_message(message):
                 listaStrikes[aux+1] = "0"
 
                 await client.server_voice_state(await getUsuarioObjeto(usuario), mute=True)
-                await asyncio.sleep(5)
+                await asyncio.sleep(20)
                 await client.server_voice_state(await getUsuarioObjeto(usuario), mute=False)
 
             else:
                 listaStrikes[aux+1] = str(num)
-                lista = str(usuario).split("#")
-                usuario = lista[0]
                 msg = 'El usuario @' + str(usuario) + ' tiene ahora ' + str(num) + ' strikes, puesto por  {0.author.mention}'.format(message)
 
         else:
@@ -94,6 +92,8 @@ async def on_message(message):
 
         else:
             await client.send_message(message.channel, "No existe ese usuario")
+
+
 @client.event
 async def on_ready():
     print('Logged in as')
