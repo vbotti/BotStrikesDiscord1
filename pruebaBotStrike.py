@@ -123,7 +123,7 @@ async def on_message(message):
                 await client.delete_message(mensaje)
         except:
             return
-        
+
     if message.content.startswith('?limpiar'):
         list = []
         try:
