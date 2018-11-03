@@ -82,7 +82,8 @@ async def on_message(message):
         else:
             listaStrikes.append(usuario)
             listaStrikes.append("1")
-            msg = 'El usuario @' + str(usuario) + ' tiene ahora 1 strike, puesto por  {0.author.mention}'.format(message)
+            mencionado = await getUsuarioObjeto(usuario)
+            msg = 'El usuario ' + mencionado.mention + ' tiene ahora 1 strike, puesto por  {0.author.mention}'.format(message)
             await client.send_message(message.channel, msg)
 
 
@@ -104,7 +105,11 @@ async def on_message(message):
             else:
                 await client.send_message(message.channel, "No existe ese usuario")
 
-
+    if message.content.startswith('?paz'):
+        jorge = await getUsuarioObjeto("jorge")
+        pulpo = await getUsuarioObjeto("pulpi")
+        msg = ':angel: :angel: '+ jorge.mention + ' perdona al inocente de ' +pulpo.mention+ ", el solo quiere la PAZ :angel: :angel:".format(message)
+        await client.send_message(message.channel, msg)
 
 
 @client.event
