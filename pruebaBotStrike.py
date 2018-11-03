@@ -31,8 +31,6 @@ async def getUsuarioObjeto(usuario):
     for member in members:
         if usuario in str(member).lower():
             return member
-        else:
-            return None
 
 @client.event
 async def on_message(message):
@@ -69,19 +67,23 @@ async def on_message(message):
                 listaStrikes[aux+1] = "0"
 
                 await client.server_voice_state(await getUsuarioObjeto(usuario), mute=True)
+                await client.send_message(message.channel, msg)
                 await asyncio.sleep(20)
                 await client.server_voice_state(await getUsuarioObjeto(usuario), mute=False)
+
 
             else:
                 listaStrikes[aux+1] = str(num)
                 msg = 'El usuario @' + str(usuario) + ' tiene ahora ' + str(num) + ' strikes, puesto por  {0.author.mention}'.format(message)
+                await client.send_message(message.channel, msg)
 
         else:
             listaStrikes.append(usuario)
             listaStrikes.append("1")
             msg = 'El usuario @' + str(usuario) + ' tiene ahora 1 strike, puesto por  {0.author.mention}'.format(message)
+            await client.send_message(message.channel, msg)
 
-        await client.send_message(message.channel, msg)
+
     if message.content.startswith('?kick'):
 
         mensaje = (message.content).split(' ')
@@ -92,6 +94,7 @@ async def on_message(message):
 
         else:
             await client.send_message(message.channel, "No existe ese usuario")
+
 
 
 @client.event
