@@ -31,6 +31,8 @@ async def getUsuarioObjeto(usuario):
     for member in members:
         if usuario in str(member).lower():
             return member
+        else:
+            return None
 
 @client.event
 async def on_message(message):
@@ -82,7 +84,16 @@ async def on_message(message):
             msg = 'El usuario @' + str(usuario) + ' tiene ahora 1 strike, puesto por  {0.author.mention}'.format(message)
 
         await client.send_message(message.channel, msg)
+    if message.content.startswith('?kick'):
 
+        mensaje = (message.content).split(' ')
+        if getUsuarioObjeto(mensaje[1]!=None):
+            await client.kick(await getUsuarioObjeto(mensaje[1]))
+
+            await client.send_message(message.channel, ':zap:' + "El invocador " + mensaje[1] + " se ha desconectado")
+
+        else:
+            await client.send_message(message.channel, "No existe ese usuario")
 @client.event
 async def on_ready():
     print('Logged in as')
