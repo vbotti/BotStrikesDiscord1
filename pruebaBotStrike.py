@@ -67,7 +67,7 @@ async def on_message(message):
                 listaStrikes[aux+1] = "0"
 
                 await client.server_voice_state(await getUsuarioObjeto(usuario), mute=True)
-                await asyncio.sleep(5)
+                await asyncio.sleep(20)
                 await client.server_voice_state(await getUsuarioObjeto(usuario), mute=False)
 
             else:
