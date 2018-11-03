@@ -1,6 +1,7 @@
 import asyncio
 
 import discord
+from discord import User
 
 TOKEN = 'NTA3OTI5NzY0NDE0MDk1MzY5.Dr43qw.Kj16fyIPJLdEWNeqg2OW6tX5JNs'
 client = discord.Client()
@@ -60,10 +61,11 @@ async def on_message(message):
             aux = listaStrikes.index(usuario)
             num = listaStrikes[aux +1]
             num = int(num) + 1
+            mencionado = await getUsuarioObjeto(usuario)
             if str(num) == "3":
 
 
-                msg ='@' + usuario + " ha sido muteado 20 segundos"
+                msg = mencionado.mention + " ha sido muteado 20 segundos"
                 listaStrikes[aux+1] = "0"
 
                 await client.server_voice_state(await getUsuarioObjeto(usuario), mute=True)
@@ -74,7 +76,7 @@ async def on_message(message):
 
             else:
                 listaStrikes[aux+1] = str(num)
-                msg = 'El usuario @' + str(usuario) + ' tiene ahora ' + str(num) + ' strikes, puesto por  {0.author.mention}'.format(message)
+                msg = 'El usuario ' + mencionado.mention + ' tiene ahora ' + str(num) + ' strikes, puesto por  {0.author.mention}'.format(message)
                 await client.send_message(message.channel, msg)
 
         else:
@@ -101,6 +103,7 @@ async def on_message(message):
 
             else:
                 await client.send_message(message.channel, "No existe ese usuario")
+
 
 
 
