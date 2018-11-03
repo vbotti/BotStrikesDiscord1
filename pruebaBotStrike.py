@@ -65,8 +65,6 @@ async def on_message(message):
                 await client.server_voice_state(await getUsuarioObjeto(usuario), mute=True)
             else:
                 listaStrikes[aux+1] = str(num)
-                lista = str(usuario).split("#")
-                usuario = lista[0]
                 msg = 'El usuario @' + str(usuario) + ' tiene ahora ' + str(num) + ' strikes, puesto por  {0.author.mention}'.format(message)
 
         else:
@@ -75,6 +73,8 @@ async def on_message(message):
             msg = 'El usuario @' + str(usuario) + ' tiene ahora 1 strike, puesto por  {0.author.mention}'.format(message)
 
         await client.send_message(message.channel, msg)
+
+
 
 @client.event
 async def on_ready():
