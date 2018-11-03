@@ -87,13 +87,20 @@ async def on_message(message):
     if message.content.startswith('?kick'):
 
         mensaje = (message.content).split(' ')
-        if getUsuarioObjeto(mensaje[1]!=None):
-            await client.kick(await getUsuarioObjeto(mensaje[1]))
+        victor = await getUsuario("hiimvistor")
+        print(victor)
+        koko = await getUsuario("koko")
+        print(message.author)
+        print(str(message.author))
+        if str(message.author).lower() == victor or message == koko:
+            print()
+            if getUsuarioObjeto(mensaje[1]!=None):
+                await client.kick(await getUsuarioObjeto(mensaje[1]))
 
-            await client.send_message(message.channel, ':zap:' + "El invocador " + mensaje[1] + " se ha desconectado")
+                await client.send_message(message.channel, ':zap:' + "El invocador " + mensaje[1] + " se ha desconectado")
 
-        else:
-            await client.send_message(message.channel, "No existe ese usuario")
+            else:
+                await client.send_message(message.channel, "No existe ese usuario")
 
 
 
