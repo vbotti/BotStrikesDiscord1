@@ -72,7 +72,7 @@ async def on_message(message):
 
             else:
                 listaStrikes[aux+1] = str(num)
-                msg = 'El usuario @' + str(usuario) + ' tiene ahora ' + str(num) + ' strikes, puesto por {0.author.mention}'.format(message)
+                msg = 'El usuario @' + str(usuario) + ' tiene ahora ' + str(num) + ' strikes, puesto por  {0.author.mention}'.format(message)
 
         else:
             listaStrikes.append(usuario)
