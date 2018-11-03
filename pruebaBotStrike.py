@@ -50,19 +50,19 @@ async def on_message(message):
 
 
 
-    if message.content.startswith('?ping'):
+    if message.content.startswith('-ping'):
         await client.send_message(message.channel, '?pong {0.author.mention}'.format(message))
 
-    if message.content.startswith('?hello'):
+    if message.content.startswith('-hello'):
         msg = 'Hello {0.author.mention}'.format(message)
         await client.send_message(message.channel, msg)
 
-    if message.content.startswith('?strike'):
+    if message.content.startswith('-strike'):
         if admin == "0":
             await client.send_message(message.channel, 'No tienes permiso aquí {0.author.mention}'.format(message))
             return
         usuario = str(message.content)
-        usuario = usuario.replace('?strike ', "")
+        usuario = usuario.replace('-strike ', "")
         usuario = usuario.strip().lower()
         usuario = await getUsuario(usuario)
 
@@ -100,7 +100,7 @@ async def on_message(message):
             await client.send_message(message.channel, msg)
 
 
-    if message.content.startswith('?kick'):
+    if message.content.startswith('-kick'):
         if admin == "0":
             await client.send_message(message.channel, 'No tienes permiso aquí {0.author.mention}'.format(message))
             return
@@ -116,18 +116,18 @@ async def on_message(message):
             else:
                 await client.send_message(message.channel, "No existe ese usuario")
 
-    if message.content.startswith('?paz'):
+    if message.content.startswith('-paz'):
         jorge = await getUsuarioObjeto("jorge")
         pulpo = await getUsuarioObjeto("pulpi")
         msg = ':angel: :angel: '+ jorge.mention + ' perdona al inocente de ' +pulpo.mention+ ", el solo quiere la PAZ :angel: :angel:".format(message)
         await client.send_message(message.channel, msg)
 
 
-    if message.content.startswith('?dado'):
+    if message.content.startswith('-dado'):
         msg = randint(1,6)
         await client.send_message(message.channel, "El número es ------------------> " + str(msg))
 
-    if message.content.startswith('?borrar'):
+    if message.content.startswith('-borrar'):
         men = (message.content).split(' ')
         try:
             async for mensaje in client.logs_from(message.channel, limit=int(men[1])):
@@ -135,11 +135,11 @@ async def on_message(message):
         except:
             return
 
-    if message.content.startswith('?limpiar'):
+    if message.content.startswith('-limpiar'):
         list = []
         try:
             async for mensaje in client.logs_from(message.channel, limit=100):
-                if mensaje.author == client.user or mensaje.content.startswith('?'):
+                if mensaje.author == client.user or mensaje.content.startswith('-'):
                     list.append(mensaje)
             await client.delete_messages(list)
 
