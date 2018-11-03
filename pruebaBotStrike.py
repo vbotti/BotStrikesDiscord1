@@ -20,7 +20,6 @@ async def getUsuario(usuario):
     x = 0
     for member in members:
         if usuario in str(member).lower():
-            print(member)
             x = 1
             return str(member).lower()
 
@@ -36,10 +35,20 @@ async def getUsuarioObjeto(usuario):
 
 @client.event
 async def on_message(message):
-    # we do not want the bot to reply to itself
+
 
     if message.author == client.user:
         return
+
+    admin = "0"
+    # we do not want the bot to reply to itself
+    roles = message.author.roles
+    for rol in roles:
+        print(rol)
+        if str(rol) in "Admins":
+            admin = "1"
+
+
 
     if message.content.startswith('?ping'):
         await client.send_message(message.channel, '?pong {0.author.mention}'.format(message))
@@ -49,6 +58,9 @@ async def on_message(message):
         await client.send_message(message.channel, msg)
 
     if message.content.startswith('?strike'):
+        if admin == "0":
+            await client.send_message(message.channel, 'No tienes permiso aquí {0.author.mention}'.format(message))
+            return
         usuario = str(message.content)
         usuario = usuario.replace('?strike ', "")
         usuario = usuario.strip().lower()
@@ -89,15 +101,13 @@ async def on_message(message):
 
 
     if message.content.startswith('?kick'):
-
+        if admin == "0":
+            await client.send_message(message.channel, 'No tienes permiso aquí {0.author.mention}'.format(message))
+            return
         mensaje = (message.content).split(' ')
         victor = await getUsuario("hiimvistor")
-        print(victor)
-        koko = await getUsuario("koko")
-        print(message.author)
-        print(str(message.author))
-        if str(message.author).lower() == victor or message == koko:
-            print()
+        koko = await getUsuario("mrskoko")
+        if str(message.author).lower() == victor or str(message.author).lower() == koko:
             if getUsuarioObjeto(mensaje[1]!=None):
                 await client.kick(await getUsuarioObjeto(mensaje[1]))
 
@@ -111,6 +121,7 @@ async def on_message(message):
         pulpo = await getUsuarioObjeto("pulpi")
         msg = ':angel: :angel: '+ jorge.mention + ' perdona al inocente de ' +pulpo.mention+ ", el solo quiere la PAZ :angel: :angel:".format(message)
         await client.send_message(message.channel, msg)
+
 
     if message.content.startswith('?dado'):
         msg = randint(1,6)
@@ -128,7 +139,7 @@ async def on_message(message):
         list = []
         try:
             async for mensaje in client.logs_from(message.channel, limit=100):
-                if mensaje.author == client.user or '?' in mensaje.content or '!' in mensaje.content:
+                if mensaje.author == client.user or mensaje.content.startswith('?'):
                     list.append(mensaje)
             await client.delete_messages(list)
 
