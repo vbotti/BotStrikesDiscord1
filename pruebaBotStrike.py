@@ -32,7 +32,6 @@ async def getUsuarioObjeto(usuario):
         if usuario in str(member).lower():
             return member
 
-
 @client.event
 async def on_message(message):
     # we do not want the bot to reply to itself
@@ -68,29 +67,41 @@ async def on_message(message):
                 listaStrikes[aux+1] = "0"
 
                 await client.server_voice_state(await getUsuarioObjeto(usuario), mute=True)
+                await client.send_message(message.channel, msg)
                 await asyncio.sleep(20)
                 await client.server_voice_state(await getUsuarioObjeto(usuario), mute=False)
+
 
             else:
                 listaStrikes[aux+1] = str(num)
                 msg = 'El usuario @' + str(usuario) + ' tiene ahora ' + str(num) + ' strikes, puesto por  {0.author.mention}'.format(message)
+                await client.send_message(message.channel, msg)
 
         else:
             listaStrikes.append(usuario)
             listaStrikes.append("1")
             msg = 'El usuario @' + str(usuario) + ' tiene ahora 1 strike, puesto por  {0.author.mention}'.format(message)
+            await client.send_message(message.channel, msg)
 
-        await client.send_message(message.channel, msg)
+
     if message.content.startswith('?kick'):
 
         mensaje = (message.content).split(' ')
-        if getUsuarioObjeto(mensaje[1]!=None):
-            await client.kick(await getUsuarioObjeto(mensaje[1]))
+        victor = await getUsuario("hiimvistor")
+        print(victor)
+        koko = await getUsuario("koko")
+        print(message.author)
+        print(str(message.author))
+        if str(message.author).lower() == victor or message == koko:
+            print()
+            if getUsuarioObjeto(mensaje[1]!=None):
+                await client.kick(await getUsuarioObjeto(mensaje[1]))
 
-            await client.send_message(message.channel, ':zap:' + "El invocador " + mensaje[1] + " se ha desconectado")
+                await client.send_message(message.channel, ':zap:' + "El invocador " + mensaje[1] + " se ha desconectado")
 
-        else:
-            await client.send_message(message.channel, "No existe ese usuario")
+            else:
+                await client.send_message(message.channel, "No existe ese usuario")
+
 
 
 @client.event
