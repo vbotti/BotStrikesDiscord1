@@ -110,7 +110,12 @@ async def on_message(message):
         pulpo = await getUsuarioObjeto("pulpi")
         msg = ':angel: :angel: '+ jorge.mention + ' perdona al inocente de ' +pulpo.mention+ ", el solo quiere la PAZ :angel: :angel:".format(message)
         await client.send_message(message.channel, msg)
+    if message.content.startswith('?clean'):
 
+        listacanales = message.channel
+        await client.purge_from(message.channel,limit=10)
+        #client.get_message()
+        #client.delete_messages()
 
 @client.event
 async def on_ready():
