@@ -31,8 +31,7 @@ async def getUsuarioObjeto(usuario):
     for member in members:
         if usuario in str(member).lower():
             return member
-        else:
-            return None
+
 
 @client.event
 async def on_message(message):
