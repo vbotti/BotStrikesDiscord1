@@ -139,7 +139,7 @@ async def on_message(message):
         list = []
         try:
             async for mensaje in client.logs_from(message.channel, limit=100):
-                if mensaje.author == client.user or mensaje.content.startswith('-') or mensaje.content.startswith('?') or mensaje.content.startswith('!'):
+                if mensaje.author == client.user or mensaje.content.startswith('-'):
                     list.append(mensaje)
             await client.delete_messages(list)
 
